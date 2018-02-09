@@ -1,0 +1,56 @@
+name:                 modern-path
+version:              0.0.1.0
+cabal-version:        >= 1.18
+tested-with:          GHC==7.10.3, GHC==8.0.2, GHC==8.2.2
+license:              BSD3
+license-file:         LICENSE.md
+author:               Mark Karpov <markkarpov92@gmail.com>
+maintainer:           Mark Karpov <markkarpov92@gmail.com>
+homepage:             https://github.com/mrkkrp/modern-path
+bug-reports:          https://github.com/mrkkrp/modern-path/issues
+category:             System
+synopsis:             Type-safe path and file system operations wit battaries included
+build-type:           Simple
+description:          Type-safe path and file system operations wit battaries included.
+extra-doc-files:      CHANGELOG.md
+                    , README.md
+
+source-repository head
+  type:               git
+  location:           https://github.com/mrkkrp/modern-path.git
+
+flag dev
+  description:        Turn on development settings.
+  manual:             True
+  default:            False
+
+library
+  build-depends:      base             >= 4.8     && < 5.0
+                    , directory        >= 1.2.2   && < 1.4
+                    , dlist            >= 0.8     && < 0.9
+                    , exceptions       >= 0.8     && < 0.9
+                    , filepath         >= 1.2     && < 1.5
+                    , temporary        >= 1.1     && < 1.3
+  exposed-modules:    System.ModernPath
+                    , System.ModernPath.Core
+                    , System.ModernPath.Lens
+                    , System.ModernPath.Operation
+                    , System.ModernPath.QQ
+                    , System.ModernPath.Temporary
+  if flag(dev)
+    ghc-options:      -Wall -Werror
+  else
+    ghc-options:      -O2 -Wall
+  default-language:   Haskell2010
+
+test-suite tests
+  main-is:            Spec.hs
+  hs-source-dirs:     tests
+  type:               exitcode-stdio-1.0
+  build-depends:      base             >= 4.8 && < 5.0
+                    , modern-path
+  if flag(dev)
+    ghc-options:      -Wall -Werror
+  else
+    ghc-options:      -O2 -Wall
+  default-language:   Haskell2010
